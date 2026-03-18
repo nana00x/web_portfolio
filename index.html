@@ -601,25 +601,205 @@ footer {
 ::-webkit-scrollbar-thumb { background: rgba(34,197,94,.3); border-radius: 3px; }
 
 /* ═══════════════════════════════════════════
-   RESPONSIVE
+   HAMBURGER MENU
+═══════════════════════════════════════════ */
+.nav-hamburger {
+  display: none;
+  flex-direction: column; justify-content: center; align-items: center;
+  gap: 5px; width: 40px; height: 40px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px; cursor: pointer; padding: 8px;
+  transition: background .2s, border-color .2s;
+}
+.nav-hamburger:hover { background: rgba(34,197,94,.1); border-color: rgba(34,197,94,.25); }
+.nav-hamburger span {
+  display: block; width: 20px; height: 1.5px;
+  background: var(--white); border-radius: 2px;
+  transition: transform .3s var(--ease), opacity .2s, width .3s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile menu drawer */
+.mobile-menu {
+  position: fixed; top: 0; right: -100%; width: min(320px, 85vw);
+  height: 100dvh; z-index: 999;
+  background: rgba(6,15,9,.97); backdrop-filter: blur(24px);
+  border-left: 1px solid rgba(255,255,255,.07);
+  padding: 100px 32px 48px;
+  transition: right .4s var(--ease);
+  display: flex; flex-direction: column;
+}
+.mobile-menu.open { right: 0; }
+
+.mobile-overlay {
+  position: fixed; inset: 0; z-index: 998;
+  background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+}
+.mobile-overlay.open { opacity: 1; pointer-events: all; }
+
+.mobile-links { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.mobile-links li { opacity: 0; transform: translateX(20px); transition: opacity .3s, transform .3s; }
+.mobile-menu.open .mobile-links li:nth-child(1) { opacity:1; transform:none; transition-delay:.1s; }
+.mobile-menu.open .mobile-links li:nth-child(2) { opacity:1; transform:none; transition-delay:.15s; }
+.mobile-menu.open .mobile-links li:nth-child(3) { opacity:1; transform:none; transition-delay:.2s; }
+.mobile-menu.open .mobile-links li:nth-child(4) { opacity:1; transform:none; transition-delay:.25s; }
+.mobile-menu.open .mobile-links li:nth-child(5) { opacity:1; transform:none; transition-delay:.3s; }
+.mobile-menu.open .mobile-links li:nth-child(6) { opacity:1; transform:none; transition-delay:.35s; }
+.mobile-links a {
+  display: block; padding: 14px 16px;
+  font-size: 18px; font-weight: 600; color: rgba(255,255,255,.65);
+  text-decoration: none; border-radius: 12px;
+  transition: color .2s, background .2s;
+}
+.mobile-links a:hover, .mobile-links a:active { color: var(--white); background: rgba(34,197,94,.08); }
+.mobile-cta {
+  margin-top: 8px !important;
+  background: var(--leaf) !important; color: var(--forest) !important;
+  font-weight: 800 !important; text-align: center;
+  border-radius: 40px !important;
+}
+.mobile-cta:hover { background: var(--mist) !important; }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — TABLET (≤ 900px)
 ═══════════════════════════════════════════ */
 @media (max-width: 900px) {
+  /* Nav */
   nav { padding: 16px 24px; }
   nav.scrolled { padding: 12px 24px; }
   .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+
+  /* Sections */
   section { padding: 80px 24px; }
+
+  /* Stats */
   .stats { padding: 40px 24px; }
   .stats-inner { grid-template-columns: repeat(2,1fr); }
-  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); }
-  .about-grid, .impact-inner, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); padding: 20px 20px; }
+  .stat-item:last-child { border-bottom: none; }
+
+  /* About */
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .about-visual { max-width: 320px; margin: 0 auto; aspect-ratio: 1; }
+  .about-ring { transform: translate(-50%,-50%) !important; }
+
+  /* Services */
+  .services-grid { grid-template-columns: repeat(2,1fr); gap: 14px; }
+  .service-card.featured { grid-row: span 1; grid-column: span 2; }
+
+  /* Impact */
+  .impact-inner { grid-template-columns: 1fr; gap: 48px; }
   .impact-left { position: static; }
-  .services-grid { grid-template-columns: 1fr; }
-  .service-card.featured { grid-row: span 1; }
+  .impact-metrics { grid-template-columns: repeat(2,1fr); }
+
+  /* Team */
   .team-grid { grid-template-columns: repeat(2,1fr); }
+
+  /* Partners */
   .partners { padding: 40px 24px; }
+  .partners-row { gap: 28px; }
+
+  /* CTA */
   .cta-section { padding: 80px 24px; }
+
+  /* Contact */
+  .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+
+  /* Form */
   .form-row { grid-template-columns: 1fr; }
+
+  /* Footer */
   footer { padding: 40px 24px; }
+  .footer-links { gap: 16px; }
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤ 640px)
+═══════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Nav */
+  nav { padding: 14px 20px; }
+  nav.scrolled { padding: 10px 20px; }
+
+  /* Hero */
+  .hero { padding: 100px 20px 80px; }
+  .hero-title { letter-spacing: -.03em; }
+  .hero-actions { flex-direction: column; align-items: center; gap: 12px; }
+  .btn-primary, .btn-ghost { width: 100%; max-width: 280px; text-align: center; }
+  .hero-mark svg { width: 90px; height: 90px; }
+
+  /* Sections */
+  section { padding: 64px 20px; }
+
+  /* Stats — single column */
+  .stats { padding: 32px 20px; }
+  .stats-inner { grid-template-columns: repeat(2,1fr); }
+  .stat-item { padding: 16px 12px; }
+
+  /* About */
+  .about-visual { max-width: 240px; }
+
+  /* Services — single column */
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card.featured { grid-column: span 1; }
+  .service-card { padding: 28px 24px; }
+
+  /* Impact metrics */
+  .impact-metrics { grid-template-columns: 1fr 1fr; }
+
+  /* Team — single column */
+  .team-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+
+  /* Testimonials */
+  .testi-card { width: min(320px, 80vw); }
+
+  /* Partners */
+  .partners { padding: 32px 20px; }
+  .partners-row { gap: 20px; }
+
+  /* CTA */
+  .cta-section { padding: 64px 20px; }
+  .cta-actions { flex-direction: column; align-items: center; }
+  .btn-white, .cta-actions .btn-ghost { width: 100%; max-width: 280px; text-align: center; }
+
+  /* Contact */
+  .contact-grid { gap: 36px; }
+
+  /* Form */
+  .form-submit { width: 100%; text-align: center; }
+
+  /* Footer */
+  footer { padding: 36px 20px; }
+  .footer-links { gap: 12px; }
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — SMALL PHONE (≤ 420px)
+═══════════════════════════════════════════ */
+@media (max-width: 420px) {
+  .stats-inner { grid-template-columns: 1fr 1fr; }
+  .stat-num { font-size: 28px; }
+  .hero-badge { font-size: 9.5px; }
+  .impact-metrics { grid-template-columns: 1fr; }
+  .metric-card { padding: 22px 18px; }
+  .section-title { letter-spacing: -.02em; }
+  .testi-card { width: calc(100vw - 48px); }
+}
+
+/* ═══════════════════════════════════════════
+   TOUCH DEVICES — disable custom cursor
+═══════════════════════════════════════════ */
+@media (hover: none) and (pointer: coarse) {
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+  .service-card, .team-card, .form-submit { cursor: pointer; }
+  select.form-input { cursor: pointer; }
 }
 </style>
 </head>
@@ -649,7 +829,23 @@ footer {
     <li><a href="#team">Tim</a></li>
     <li><a href="#contact" class="nav-cta">Hubungi Kami</a></li>
   </ul>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU DRAWER -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul class="mobile-links">
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#services">Layanan</a></li>
+    <li><a href="#impact">Dampak</a></li>
+    <li><a href="#team">Tim</a></li>
+    <li><a href="#contact">Kontak</a></li>
+    <li><a href="#contact" class="mobile-cta">Hubungi Kami</a></li>
+  </ul>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
 
 <!-- HERO -->
 <section class="hero" id="home">
@@ -1110,7 +1306,7 @@ footer {
           </div>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-value">halo@agriva.id</div>
+            <div class="contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7018111c1f301117021906115e1914">[email&#160;protected]</a></div>
           </div>
         </div>
         <div class="contact-item">
@@ -1185,7 +1381,7 @@ footer {
   <div class="footer-copy">© 2025 <span>Agriva Indonesia</span>. Semua hak dilindungi. · Yogyakarta, Indonesia.</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ─── CURSOR ─────────────────────── */
 const cursor = document.getElementById('cursor');
 const ring   = document.getElementById('cursorRing');
@@ -1261,12 +1457,26 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   });
 });
 
-/* ─── FORM SUBMIT ───────────────── */
-document.querySelector('.form-submit').addEventListener('click',function(){
-  this.textContent='Pesan Terkirim ✓';
-  this.style.background='#16A34A';
-  setTimeout(()=>{this.textContent='Kirim Pesan →';this.style.background='';},3000);
+/* ─── CURSOR — disable on touch ─── */
+const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+if(isTouch){ cursor.style.display='none'; ring.style.display='none'; }
+
+/* ─── HAMBURGER MENU ────────────── */
+const hamburger = document.getElementById('navHamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const overlay = document.getElementById('mobileOverlay');
+
+function toggleMenu(open){
+  hamburger.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', open);
+  mobileMenu.classList.toggle('open', open);
+  overlay.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+
+hamburger.addEventListener('click', ()=> toggleMenu(!mobileMenu.classList.contains('open')));
+overlay.addEventListener('click', ()=> toggleMenu(false));
+
+document.querySelectorAll('.mobile-links a').forEach(a=>{
+  a.addEventListener('click',()=> toggleMenu(false));
 });
-</script>
-</body>
-</html>
