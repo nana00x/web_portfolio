@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Iklan Produk — Agriva Indonesia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --deep:   #060F09; --forest: #0A2218; --grove:  #14532D;
+  --mid:    #16A34A; --leaf:   #22C55E; --mist:   #4ADE80;
+  --frost:  #86EFAC; --pale:   #F0FDF4; --gold:   #D97706;
+  --white:  #FFFFFF;
+  --sans:   'Plus Jakarta Sans', sans-serif;
+  --serif:  'Lora', Georgia, serif;
+  --ease:   cubic-bezier(0.16, 1, 0.3, 1);
+  --radius-sm: 10px; --radius-md: 14px; --radius-lg: 20px; --radius-full: 9999px;
+}
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--sans); background: var(--deep); color: var(--white); overflow-x: hidden; cursor: none; }
+
+/* ═══════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════ */
+.cursor { position:fixed; pointer-events:none; z-index:9999; width:10px; height:10px; border-radius:50%; background:var(--mist); transform:translate(-50%,-50%); transition:width .25s var(--ease),height .25s var(--ease),opacity .2s; mix-blend-mode:screen; }
+.cursor-ring { position:fixed; pointer-events:none; z-index:9998; width:36px; height:36px; border-radius:50%; border:1.5px solid rgba(74,222,128,.45); transform:translate(-50%,-50%); transition:width .4s var(--ease),height .4s var(--ease),transform .12s linear; }
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+#nav { position:fixed; top:0; left:0; right:0; z-index:1000; padding:20px 60px; display:flex; align-items:center; justify-content:space-between; transition:background .4s,padding .4s,backdrop-filter .4s; }
+#nav.scrolled { background:rgba(6,15,9,.88); backdrop-filter:blur(20px); padding:14px 60px; border-bottom:1px solid rgba(255,255,255,.06); }
+.nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; flex-shrink:0; }
+.nav-logo-name { font-size:20px; font-weight:800; letter-spacing:-.02em; color:var(--white); }
+.nav-logo-name span { color:var(--mist); }
+.nav-links { display:flex; align-items:center; gap:32px; list-style:none; }
+.nav-links a { font-size:13px; font-weight:500; letter-spacing:.04em; color:rgba(255,255,255,.55); text-decoration:none; transition:color .2s; position:relative; }
+.nav-links a::after { content:''; position:absolute; left:0; bottom:-4px; width:0; height:1.5px; background:var(--mist); transition:width .3s var(--ease); }
+.nav-links a:hover { color:var(--white); }
+.nav-links a:hover::after { width:100%; }
+.nav-links a.active { color:var(--mist); }
+.nav-cta { background:var(--leaf); color:var(--forest)!important; padding:8px 20px; border-radius:24px; font-weight:700!important; font-size:13px!important; transition:background .2s,transform .15s!important; }
+.nav-cta::after { display:none!important; }
+.nav-cta:hover { background:var(--mist)!important; transform:translateY(-1px); }
+.nav-hamburger { display:none; flex-direction:column; justify-content:center; align-items:center; gap:5px; width:40px; height:40px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:var(--radius-sm); cursor:pointer; padding:8px; transition:background .2s,border-color .2s; flex-shrink:0; }
+.nav-hamburger:hover { background:rgba(34,197,94,.1); border-color:rgba(34,197,94,.3); }
+.nav-hamburger span { display:block; width:20px; height:1.5px; background:var(--white); border-radius:2px; transition:transform .35s var(--ease),opacity .2s,width .3s; }
+.nav-hamburger.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity:0; width:0; }
+.nav-hamburger.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { position:fixed; top:0; right:-100%; width:min(320px,88vw); height:100dvh; z-index:999; background:rgba(6,15,9,.97); backdrop-filter:blur(24px); border-left:1px solid rgba(255,255,255,.07); padding:96px 28px 48px; transition:right .4s var(--ease); }
+.mobile-menu.open { right:0; }
+.mobile-overlay { position:fixed; inset:0; z-index:998; background:rgba(0,0,0,.55); backdrop-filter:blur(3px); opacity:0; pointer-events:none; transition:opacity .3s; }
+.mobile-overlay.open { opacity:1; pointer-events:all; }
+.mobile-links { list-style:none; display:flex; flex-direction:column; gap:2px; }
+.mobile-links li { opacity:0; transform:translateX(20px); transition:opacity .3s,transform .3s; }
+.mobile-menu.open .mobile-links li:nth-child(1){opacity:1;transform:none;transition-delay:.08s}
+.mobile-menu.open .mobile-links li:nth-child(2){opacity:1;transform:none;transition-delay:.13s}
+.mobile-menu.open .mobile-links li:nth-child(3){opacity:1;transform:none;transition-delay:.18s}
+.mobile-menu.open .mobile-links li:nth-child(4){opacity:1;transform:none;transition-delay:.23s}
+.mobile-menu.open .mobile-links li:nth-child(5){opacity:1;transform:none;transition-delay:.28s}
+.mobile-menu.open .mobile-links li:nth-child(6){opacity:1;transform:none;transition-delay:.33s}
+.mobile-links a { display:block; padding:13px 16px; font-size:17px; font-weight:600; color:rgba(255,255,255,.6); text-decoration:none; border-radius:var(--radius-md); transition:color .2s,background .2s; }
+.mobile-links a:hover,.mobile-links a:active { color:var(--white); background:rgba(34,197,94,.07); }
+.mobile-links li:nth-child(6) { margin-top:12px; }
+.mobile-cta { background:var(--leaf)!important; color:var(--forest)!important; font-weight:800!important; text-align:center; border-radius:var(--radius-full)!important; }
+
+/* ═══════════════════════════════════════════
+   SECTION COMMON
+═══════════════════════════════════════════ */
+.section-tag { display:inline-flex; align-items:center; gap:8px; font-size:10.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--mist); margin-bottom:16px; }
+.section-tag::before { content:''; display:block; width:24px; height:1.5px; background:var(--mist); }
+.section-title { font-size:clamp(28px,4vw,52px); font-weight:800; letter-spacing:-.03em; line-height:1.1; }
+.section-title em { font-style:normal; color:var(--mist); }
+.reveal { opacity:0; transform:translateY(32px); transition:opacity .8s var(--ease),transform .8s var(--ease); }
+.reveal.visible { opacity:1; transform:none; }
+
+/* ═══════════════════════════════════════════
+   IKLAN PAGE
+═══════════════════════════════════════════ */
+.iklan-page { min-height:100vh; padding-top:100px; background:var(--deep); }
+
+.iklan-header { padding:52px 60px 0; max-width:1200px; margin:0 auto; display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+.iklan-header-left { flex:1; min-width:220px; }
+
+/* Admin bar */
+.admin-bar { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.admin-badge { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:var(--radius-full); background:rgba(34,197,94,.1); border:1px solid rgba(34,197,94,.2); font-size:11.5px; font-weight:700; color:var(--mist); letter-spacing:.04em; }
+.admin-badge-dot { width:6px; height:6px; border-radius:50%; background:var(--mist); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
+
+/* Buttons */
+.btn-admin-toggle { display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:var(--radius-full); border:1.5px solid rgba(255,255,255,.15); background:transparent; color:rgba(255,255,255,.5); font-family:var(--sans); font-size:13px; font-weight:600; cursor:pointer; transition:border-color .2s,color .2s,background .2s; white-space:nowrap; }
+.btn-admin-toggle:hover { border-color:var(--mist); color:var(--mist); background:rgba(74,222,128,.05); }
+.btn-admin-toggle.active { border-color:var(--mist); color:var(--forest); background:var(--mist); }
+.btn-admin-logout { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:var(--radius-full); border:1.5px solid rgba(239,68,68,.25); background:transparent; color:rgba(239,68,68,.6); font-family:var(--sans); font-size:12px; font-weight:600; cursor:pointer; transition:border-color .2s,color .2s,background .2s; white-space:nowrap; }
+.btn-admin-logout:hover { border-color:rgba(239,68,68,.6); color:#f87171; background:rgba(239,68,68,.06); }
+.btn-pw-link { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:var(--radius-full); border:1.5px solid rgba(255,255,255,.1); background:transparent; color:rgba(255,255,255,.35); font-family:var(--sans); font-size:12px; font-weight:600; cursor:pointer; transition:all .2s; white-space:nowrap; }
+.btn-pw-link:hover { border-color:rgba(74,222,128,.3); color:var(--mist); }
+
+/* ═══ ADMIN PANEL ══ */
+.admin-panel { max-width:1200px; margin:28px auto 0; padding:0 60px; overflow:hidden; max-height:0; opacity:0; transition:max-height .5s var(--ease),opacity .35s,margin .4s; }
+.admin-panel.open { max-height:600px; opacity:1; }
+.admin-form { background:rgba(10,34,24,.7); border:1px solid rgba(34,197,94,.2); border-radius:var(--radius-lg); padding:28px 32px; display:flex; flex-direction:column; gap:18px; }
+.admin-form-title { font-size:15px; font-weight:800; color:var(--mist); }
+.admin-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.admin-row-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+.admin-group { display:flex; flex-direction:column; gap:6px; }
+.admin-label { font-size:10.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.4); }
+.admin-input,.admin-textarea,.admin-select { background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.09); border-radius:12px; padding:11px 14px; font-family:var(--sans); font-size:13.5px; color:var(--white); outline:none; transition:border-color .2s,background .2s; resize:none; appearance:none; width:100%; }
+.admin-input::placeholder,.admin-textarea::placeholder { color:rgba(255,255,255,.2); }
+.admin-input:focus,.admin-textarea:focus,.admin-select:focus { border-color:rgba(34,197,94,.4); background:rgba(34,197,94,.04); }
+.admin-textarea { min-height:76px; }
+.admin-form-actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.btn-save { background:var(--leaf); color:var(--forest); border:none; font-family:var(--sans); font-size:13.5px; font-weight:800; padding:11px 26px; border-radius:var(--radius-full); cursor:pointer; transition:background .2s,transform .15s; }
+.btn-save:hover { background:var(--mist); transform:translateY(-1px); }
+.btn-save:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+.btn-cancel-form { background:transparent; color:rgba(255,255,255,.4); border:1.5px solid rgba(255,255,255,.1); font-family:var(--sans); font-size:13px; font-weight:600; padding:11px 22px; border-radius:var(--radius-full); cursor:pointer; transition:color .2s,border-color .2s; }
+.btn-cancel-form:hover { color:var(--white); border-color:rgba(255,255,255,.3); }
+.admin-hint { font-size:11px; color:rgba(255,255,255,.2); margin-left:auto; }
+
+/* ═══ CHANGE PASSWORD PANEL ══ */
+.change-pw-panel { max-width:1200px; margin:0 auto; padding:0 60px; overflow:hidden; max-height:0; opacity:0; transition:max-height .4s var(--ease),opacity .3s; }
+.change-pw-panel.open { max-height:300px; opacity:1; margin-top:12px; }
+.change-pw-form { background:rgba(6,15,9,.8); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius-lg); padding:24px 32px; display:flex; flex-direction:column; gap:16px; }
+.change-pw-title { font-size:13.5px; font-weight:700; color:rgba(255,255,255,.45); display:flex; align-items:center; gap:8px; }
+.change-pw-actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.pw-feedback { font-size:12px; min-height:16px; }
+.pw-feedback.success { color:var(--mist); }
+.pw-feedback.error { color:#f87171; }
+
+/* ═══ ADS GRID ══ */
+.iklan-grid-wrapper { max-width:1200px; margin:40px auto 0; padding:0 60px 80px; }
+.iklan-meta { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+.iklan-count { font-size:12px; color:rgba(255,255,255,.3); letter-spacing:.06em; text-transform:uppercase; font-weight:600; }
+.iklan-count span { color:var(--mist); }
+.iklan-filters { display:flex; gap:8px; flex-wrap:wrap; }
+.filter-chip { padding:5px 14px; border-radius:var(--radius-full); border:1px solid rgba(255,255,255,.1); background:transparent; color:rgba(255,255,255,.35); font-family:var(--sans); font-size:11.5px; font-weight:600; cursor:pointer; transition:all .2s; white-space:nowrap; }
+.filter-chip:hover { border-color:rgba(74,222,128,.3); color:var(--mist); }
+.filter-chip.active { border-color:var(--mist); background:rgba(74,222,128,.1); color:var(--mist); }
+.iklan-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+
+/* ─── Ad Card ─── */
+.ad-card { border-radius:var(--radius-lg); overflow:hidden; border:1px solid rgba(255,255,255,.07); background:rgba(10,34,24,.5); transition:border-color .3s,transform .3s var(--ease),box-shadow .3s; position:relative; display:flex; flex-direction:column; }
+.ad-card:hover { border-color:rgba(34,197,94,.2); transform:translateY(-4px); box-shadow:0 20px 60px rgba(0,0,0,.3); }
+.ad-image { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; }
+.ad-image-placeholder { width:100%; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,rgba(10,34,24,.9),rgba(20,83,45,.6)); position:relative; }
+.ad-image-placeholder::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 60% 40%,rgba(34,197,94,.1),transparent 60%); }
+.ad-image-placeholder svg { opacity:.2; position:relative; z-index:1; }
+.ad-badge { position:absolute; top:14px; left:14px; padding:4px 10px; border-radius:var(--radius-full); font-size:9.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; backdrop-filter:blur(8px); }
+.badge-promo   { background:rgba(217,119,6,.85);  color:#fff; }
+.badge-baru    { background:rgba(34,197,94,.85);  color:var(--forest); }
+.badge-unggulan { background:rgba(99,102,241,.85); color:#fff; }
+.badge-limited  { background:rgba(239,68,68,.85);  color:#fff; }
+.badge-default  { background:rgba(255,255,255,.15); color:rgba(255,255,255,.8); }
+.ad-body { padding:20px 22px 22px; display:flex; flex-direction:column; gap:8px; flex:1; }
+.ad-category { font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(74,222,128,.6); }
+.ad-title { font-size:18px; font-weight:800; letter-spacing:-.02em; line-height:1.2; }
+.ad-desc { font-size:13px; color:rgba(255,255,255,.45); line-height:1.65; flex:1; }
+.ad-footer { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:8px; flex-wrap:wrap; }
+.ad-price { font-size:14px; font-weight:800; color:var(--mist); }
+.ad-cta { background:var(--leaf); color:var(--forest); font-size:12px; font-weight:800; padding:8px 18px; border-radius:var(--radius-full); text-decoration:none; transition:background .2s,transform .15s; white-space:nowrap; display:inline-block; }
+.ad-cta:hover { background:var(--mist); transform:translateY(-1px); }
+
+/* Admin card actions */
+.ad-actions { position:absolute; top:12px; right:12px; display:flex; gap:6px; }
+.btn-card-action { width:32px; height:32px; border-radius:8px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(8px); transition:transform .15s; }
+.btn-card-action:hover { transform:scale(1.1); }
+.btn-edit   { background:rgba(99,102,241,.85); }
+.btn-delete { background:rgba(239,68,68,.85); }
+
+/* Empty state */
+.iklan-empty { grid-column:1/-1; text-align:center; padding:80px 24px; display:flex; flex-direction:column; align-items:center; gap:18px; }
+.iklan-empty svg { opacity:.15; }
+.iklan-empty-title { font-size:20px; font-weight:800; color:rgba(255,255,255,.25); }
+.iklan-empty-sub { font-size:13px; color:rgba(255,255,255,.2); line-height:1.65; }
+
+/* ═══ LOGIN MODAL ══ */
+.login-overlay { position:fixed; inset:0; background:rgba(0,0,0,.72); backdrop-filter:blur(6px); z-index:9910; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .25s; }
+.login-overlay.open { opacity:1; pointer-events:all; }
+.login-box { background:#0A2218; border:1px solid rgba(34,197,94,.2); border-radius:var(--radius-lg); padding:40px 40px 36px; width:min(400px,92vw); text-align:center; transform:scale(.94) translateY(16px); transition:transform .35s var(--ease); position:relative; }
+.login-overlay.open .login-box { transform:scale(1) translateY(0); }
+.login-logo { width:52px; height:52px; border-radius:14px; background:rgba(34,197,94,.1); border:1px solid rgba(34,197,94,.2); display:flex; align-items:center; justify-content:center; margin:0 auto 18px; }
+.login-title { font-size:20px; font-weight:800; letter-spacing:-.02em; margin-bottom:6px; }
+.login-sub { font-size:13px; color:rgba(255,255,255,.35); margin-bottom:24px; line-height:1.5; }
+.login-group { position:relative; margin-bottom:12px; text-align:left; }
+.login-label { display:block; font-size:10.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-bottom:7px; }
+.login-input { width:100%; background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.09); border-radius:12px; padding:13px 46px 13px 16px; font-family:var(--sans); font-size:14px; color:var(--white); outline:none; transition:border-color .2s,background .2s; }
+.login-input::placeholder { color:rgba(255,255,255,.2); }
+.login-input:focus { border-color:rgba(34,197,94,.4); background:rgba(34,197,94,.04); }
+.login-input.shake { animation:shake .4s var(--ease); }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+.btn-eye { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:rgba(255,255,255,.3); padding:4px; display:flex; align-items:center; transition:color .2s; }
+.btn-eye:hover { color:var(--mist); }
+.login-error { font-size:12px; color:#f87171; margin-top:5px; min-height:16px; text-align:left; }
+.btn-login { width:100%; background:var(--leaf); color:var(--forest); border:none; font-family:var(--sans); font-size:14px; font-weight:800; padding:14px; border-radius:var(--radius-full); cursor:pointer; transition:background .2s,transform .15s,opacity .2s; margin-top:6px; }
+.btn-login:hover { background:var(--mist); transform:translateY(-1px); }
+.btn-login:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+.login-close { position:absolute; top:14px; right:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:8px; width:30px; height:30px; cursor:pointer; color:rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; transition:color .2s,background .2s; }
+.login-close:hover { color:var(--white); background:rgba(255,255,255,.1); }
+
+/* ═══ DELETE MODAL ══ */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.65); backdrop-filter:blur(4px); z-index:9900; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .25s; }
+.modal-overlay.open { opacity:1; pointer-events:all; }
+.modal-box { background:#0A2218; border:1px solid rgba(34,197,94,.2); border-radius:var(--radius-lg); padding:36px 40px; max-width:400px; width:90%; text-align:center; transform:scale(.95); transition:transform .3s var(--ease); }
+.modal-overlay.open .modal-box { transform:scale(1); }
+.modal-icon { width:52px; height:52px; border-radius:50%; background:rgba(239,68,68,.12); border:1px solid rgba(239,68,68,.2); display:flex; align-items:center; justify-content:center; margin:0 auto 18px; }
+.modal-title { font-size:18px; font-weight:800; margin-bottom:8px; }
+.modal-sub { font-size:13.5px; color:rgba(255,255,255,.45); line-height:1.6; margin-bottom:26px; }
+.modal-actions { display:flex; gap:12px; justify-content:center; }
+.btn-modal-cancel { padding:11px 24px; border-radius:var(--radius-full); border:1.5px solid rgba(255,255,255,.12); background:transparent; color:rgba(255,255,255,.45); font-family:var(--sans); font-size:13px; font-weight:600; cursor:pointer; transition:color .2s,border-color .2s; }
+.btn-modal-cancel:hover { color:var(--white); border-color:rgba(255,255,255,.3); }
+.btn-modal-delete { padding:11px 24px; border-radius:var(--radius-full); border:none; background:rgba(239,68,68,.85); color:#fff; font-family:var(--sans); font-size:13px; font-weight:800; cursor:pointer; transition:background .2s,transform .15s; }
+.btn-modal-delete:hover { background:#ef4444; transform:translateY(-1px); }
+
+/* ═══ TOAST ══ */
+.toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(20px); background:rgba(10,34,24,.95); border:1px solid rgba(34,197,94,.3); border-radius:var(--radius-full); padding:12px 24px; font-size:13.5px; font-weight:600; color:var(--mist); backdrop-filter:blur(16px); opacity:0; pointer-events:none; transition:opacity .3s,transform .3s var(--ease); z-index:9990; white-space:nowrap; }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ═══ FOOTER ══ */
+footer { background:rgba(6,15,9,.95); border-top:1px solid rgba(255,255,255,.06); padding:50px 60px; text-align:center; }
+.footer-logo { display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:14px; }
+.footer-logo-name { font-size:20px; font-weight:800; letter-spacing:-.02em; }
+.footer-logo-name span { color:var(--mist); }
+.footer-tagline { font-family:var(--serif); font-style:italic; font-size:13px; color:rgba(255,255,255,.3); margin-bottom:28px; }
+.footer-links { display:flex; justify-content:center; gap:24px; margin-bottom:28px; flex-wrap:wrap; }
+.footer-links a { font-size:12px; color:rgba(255,255,255,.3); text-decoration:none; transition:color .2s; letter-spacing:.04em; }
+.footer-links a:hover { color:var(--mist); }
+.footer-copy { font-size:11px; color:rgba(255,255,255,.18); letter-spacing:.04em; }
+.footer-copy span { color:var(--mist); }
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--deep); }
+::-webkit-scrollbar-thumb { background:rgba(34,197,94,.3); border-radius:3px; }
+
+/* ═══ RESPONSIVE ══ */
+@media (max-width:900px) {
+  #nav { padding:16px 24px; } #nav.scrolled { padding:12px 24px; }
+  .nav-links { display:none; } .nav-hamburger { display:flex; }
+  .iklan-header { padding:36px 24px 0; }
+  .admin-panel,.change-pw-panel { padding:0 24px; }
+  .admin-row,.admin-row-3 { grid-template-columns:1fr; }
+  .iklan-grid-wrapper { padding:0 24px 60px; }
+  .iklan-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:600px) {
+  .iklan-header { padding:28px 20px 0; }
+  .admin-panel,.change-pw-panel { padding:0 20px; }
+  .admin-form,.change-pw-form { padding:20px 18px; }
+  .iklan-grid-wrapper { padding:0 20px 60px; }
+  .iklan-grid { grid-template-columns:1fr; }
+  footer { padding:36px 20px; }
+  .footer-links { gap:14px; }
+}
+@media (hover:none) and (pointer:coarse) {
+  body { cursor:auto; }
+  .cursor,.cursor-ring { display:none!important; }
+  .btn-card-action,.btn-save,.btn-login { cursor:pointer; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 80 80" fill="none">
+      <rect width="80" height="80" rx="18" fill="#0A2218"/>
+      <path d="M20 62L40 14" stroke="#4ADE80" stroke-width="5" stroke-linecap="round"/>
+      <path d="M40 14L60 62" stroke="#22C55E" stroke-width="5" stroke-linecap="round"/>
+      <path d="M28 44L52 44" stroke="#16A34A" stroke-width="4" stroke-linecap="round"/>
+      <path d="M40 14C37 6 44 3 46 8C44 12 40 14 40 14Z" fill="#86EFAC"/>
+      <circle cx="40" cy="14" r="3" fill="#fff" opacity=".8"/>
+    </svg>
+    <span class="nav-logo-name">Agri<span>va</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">Tentang</a></li>
+    <li><a href="index.html#services">Layanan</a></li>
+    <li><a href="index.html#impact">Dampak</a></li>
+    <li><a href="index.html#team">Tim</a></li>
+    <li><a href="iklan.html" class="active">Iklan</a></li>
+    <li><a href="index.html#contact" class="nav-cta">Hubungi Kami</a></li>
+  </ul>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <ul class="mobile-links">
+    <li><a href="index.html#about">Tentang</a></li>
+    <li><a href="index.html#services">Layanan</a></li>
+    <li><a href="index.html#impact">Dampak</a></li>
+    <li><a href="index.html#team">Tim</a></li>
+    <li><a href="iklan.html">Iklan Produk</a></li>
+    <li><a href="index.html#contact" class="mobile-cta">Hubungi Kami</a></li>
+  </ul>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main class="iklan-page">
+
+  <!-- Header -->
+  <header class="iklan-header">
+    <div class="iklan-header-left">
+      <div class="section-tag">Iklan Produk</div>
+      <h1 class="section-title">Produk <em>Unggulan</em><br/>untuk Petani</h1>
+    </div>
+    <div class="admin-bar" id="adminBar"></div>
+  </header>
+
+  <!-- Admin Panel (form tambah/edit iklan) -->
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-form">
+      <div class="admin-form-title" id="formTitle">+ Tambah Iklan Baru</div>
+      <div class="admin-row">
+        <div class="admin-group">
+          <label class="admin-label" for="fTitle">Judul Iklan *</label>
+          <input id="fTitle" type="text" class="admin-input" placeholder="cth: Pupuk Organik GreenBoost"/>
+        </div>
+        <div class="admin-group">
+          <label class="admin-label" for="fCategory">Kategori</label>
+          <input id="fCategory" type="text" class="admin-input" placeholder="cth: Pupuk & Nutrisi"/>
+        </div>
+      </div>
+      <div class="admin-group">
+        <label class="admin-label" for="fDesc">Deskripsi</label>
+        <textarea id="fDesc" class="admin-textarea" placeholder="Jelaskan produk secara singkat dan menarik..."></textarea>
+      </div>
+      <div class="admin-row-3">
+        <div class="admin-group">
+          <label class="admin-label" for="fBadge">Badge</label>
+          <select id="fBadge" class="admin-select">
+            <option value="">— Tanpa Badge —</option>
+            <option value="Baru">Baru</option>
+            <option value="Promo">Promo</option>
+            <option value="Unggulan">Unggulan</option>
+            <option value="Limited">Limited</option>
+          </select>
+        </div>
+        <div class="admin-group">
+          <label class="admin-label" for="fPrice">Harga</label>
+          <input id="fPrice" type="text" class="admin-input" placeholder="cth: Rp 85.000 / 25kg"/>
+        </div>
+        <div class="admin-group">
+          <label class="admin-label" for="fCtaText">Teks Tombol</label>
+          <input id="fCtaText" type="text" class="admin-input" placeholder="cth: Pesan Sekarang"/>
+        </div>
+      </div>
+      <div class="admin-row">
+        <div class="admin-group">
+          <label class="admin-label" for="fCtaLink">Link Tombol</label>
+          <input id="fCtaLink" type="url" class="admin-input" placeholder="https://..."/>
+        </div>
+        <div class="admin-group">
+          <label class="admin-label" for="fImageUrl">URL Gambar (opsional)</label>
+          <input id="fImageUrl" type="url" class="admin-input" placeholder="https://..."/>
+        </div>
+      </div>
+      <div class="admin-form-actions">
+        <button class="btn-save" id="btnSave">Simpan Iklan</button>
+        <button class="btn-cancel-form" id="btnCancelForm" type="button">Batal / Reset</button>
+        <span class="admin-hint">* Judul wajib diisi</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Panel -->
+  <div class="change-pw-panel" id="changePwPanel">
+    <div class="change-pw-form">
+      <div class="change-pw-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Ganti Password Admin
+      </div>
+      <div class="admin-row-3">
+        <div class="admin-group">
+          <label class="admin-label" for="pwCurrent">Password Saat Ini</label>
+          <input id="pwCurrent" type="password" class="admin-input" placeholder="••••••••"/>
+        </div>
+        <div class="admin-group">
+          <label class="admin-label" for="pwNew">Password Baru</label>
+          <input id="pwNew" type="password" class="admin-input" placeholder="Min. 6 karakter"/>
+        </div>
+        <div class="admin-group">
+          <label class="admin-label" for="pwConfirm">Konfirmasi Password Baru</label>
+          <input id="pwConfirm" type="password" class="admin-input" placeholder="Ulangi password baru"/>
+        </div>
+      </div>
+      <div class="change-pw-actions">
+        <button class="btn-save" id="btnSavePw" style="font-size:13px;padding:10px 22px;">Simpan Password</button>
+        <button class="btn-cancel-form" id="btnCancelPw" type="button">Batal</button>
+        <span class="pw-feedback" id="pwFeedback"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ads Grid -->
+  <div class="iklan-grid-wrapper">
+    <div class="iklan-meta">
+      <div class="iklan-count" id="iklanCount">Memuat...</div>
+      <div class="iklan-filters" id="iklanFilters"></div>
+    </div>
+    <div class="iklan-grid" id="iklanGrid"></div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <svg width="26" height="26" viewBox="0 0 80 80" fill="none">
+      <rect width="80" height="80" rx="18" fill="#0A2218"/>
+      <path d="M20 62L40 14" stroke="#4ADE80" stroke-width="5" stroke-linecap="round"/>
+      <path d="M40 14L60 62" stroke="#22C55E" stroke-width="5" stroke-linecap="round"/>
+      <path d="M28 44L52 44" stroke="#16A34A" stroke-width="4" stroke-linecap="round"/>
+      <path d="M40 14C37 6 44 3 46 8C44 12 40 14 40 14Z" fill="#86EFAC"/>
+      <circle cx="40" cy="14" r="3" fill="#fff" opacity=".8"/>
+    </svg>
+    <div class="footer-logo-name">Agri<span>va</span> Indonesia</div>
+  </div>
+  <div class="footer-tagline">Tumbuh dari bumi, menjangkau masa depan.</div>
+  <div class="footer-links">
+    <a href="index.html#about">Tentang</a>
+    <a href="index.html#services">Layanan</a>
+    <a href="index.html#impact">Dampak</a>
+    <a href="index.html#team">Tim</a>
+    <a href="iklan.html">Iklan Produk</a>
+    <a href="index.html#contact">Kontak</a>
+  </div>
+  <div class="footer-copy">© 2025 <span>Agriva Indonesia</span>. Semua hak dilindungi.</div>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="login-overlay" id="loginModal">
+  <div class="login-box">
+    <button class="login-close" id="btnLoginClose">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="login-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+    <div class="login-title">Login Admin</div>
+    <div class="login-sub">Masukkan password admin untuk<br/>mengakses panel kelola iklan.</div>
+    <div class="login-group">
+      <label class="login-label" for="adminPw">Password</label>
+      <input type="password" id="adminPw" class="login-input" placeholder="Masukkan password admin"/>
+      <button type="button" class="btn-eye" id="btnEye">
+        <svg id="eyeShow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <svg id="eyeHide" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+      </button>
+      <div class="login-error" id="loginErr"></div>
+    </div>
+    <button class="btn-login" id="btnLogin">Masuk sebagai Admin</button>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal-box">
+    <div class="modal-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-linecap="round"><polyline points="3,6 5,6 21,6"/><path d="M19,6l-1,14a2,2,0,0,1-2,2H8a2,2,0,0,1-2-2L5,6"/><path d="M10,11v6M14,11v6"/><path d="M9,6V4a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1v2"/></svg>
+    </div>
+    <div class="modal-title">Hapus Iklan?</div>
+    <div class="modal-sub">Iklan "<strong id="modalAdName"></strong>" akan dihapus permanen.</div>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" id="btnModalCancel">Batal</button>
+      <button class="btn-modal-delete" id="btnModalDelete">Ya, Hapus</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════════
+   AUTH — SHA-256 password, sessionStorage
+══════════════════════════════════════════ */
+const SESSION_KEY = 'agriva_admin_session';
+const PW_KEY      = 'agriva_admin_pw_hash';
+// Default password: agriva2025
+const DEFAULT_HASH = '1319411269981c0b0a3e8a9fcd304f37354750f123a7245551e0b6ba29c5e614';
+
+async function hashPw(plain) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(plain));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function storedHash()    { return localStorage.getItem(PW_KEY) || DEFAULT_HASH; }
+function isAdmin()       { return sessionStorage.getItem(SESSION_KEY) === '1'; }
+function setAdmin(v)     { v ? sessionStorage.setItem(SESSION_KEY,'1') : sessionStorage.removeItem(SESSION_KEY); }
+async function tryLogin(pw) {
+  if (await hashPw(pw) === storedHash()) { setAdmin(true); return true; }
+  return false;
+}
+async function changePw(cur, nw) {
+  if (await hashPw(cur) !== storedHash()) return {ok:false, msg:'Password saat ini salah.'};
+  if (!nw || nw.length < 6)              return {ok:false, msg:'Password baru minimal 6 karakter.'};
+  localStorage.setItem(PW_KEY, await hashPw(nw));
+  return {ok:true, msg:'Password berhasil diubah.'};
+}
+function doLogout() { setAdmin(false); }
+
+/* ══════════════════════════════════════════
+   ADS DATA — localStorage
+══════════════════════════════════════════ */
+const ADS_KEY = 'agriva_iklan_v1';
+const DEFAULT_ADS = [
+  { id:'ad-1', title:'Pupuk Organik GreenBoost',   category:'Pupuk & Nutrisi',        badge:'Unggulan', desc:'Formula organik terbukti meningkatkan hasil panen hingga 40%. Cocok untuk padi, jagung, dan hortikultura. Ramah lingkungan dan bersertifikat SNI.',        price:'Rp 85.000 / 25kg',  ctaText:'Pesan Sekarang', ctaLink:'#', imageUrl:'' },
+  { id:'ad-2', title:'Sensor Tanah SmartSoil Pro', category:'Teknologi Pertanian',    badge:'Baru',     desc:'Pantau kelembaban, pH, dan suhu tanah secara real-time dari smartphone. Baterai tahan 6 bulan, koneksi LoRa jangkauan 5km.',                                price:'Rp 1.250.000',       ctaText:'Lihat Detail',   ctaLink:'#', imageUrl:'' },
+  { id:'ad-3', title:'Bibit Padi Unggul IR-64',    category:'Benih & Bibit',           badge:'Promo',    desc:'Varietas unggul dengan ketahanan tinggi terhadap hama wereng dan blast. Potensi hasil 7–8 ton/ha. Cocok untuk musim kemarau dan penghujan.',               price:'Rp 42.000 / 5kg',    ctaText:'Beli Sekarang',  ctaLink:'#', imageUrl:'' },
+];
+
+let ads=[], editId=null, deleteId=null, activeFilter='Semua';
+
+function loadAds() { try { ads=JSON.parse(localStorage.getItem(ADS_KEY))||[...DEFAULT_ADS]; } catch{ ads=[...DEFAULT_ADS]; } }
+function saveAds() { localStorage.setItem(ADS_KEY, JSON.stringify(ads)); }
+function uid()     { return 'ad-'+Math.random().toString(36).slice(2,9); }
+function badgeClass(b) { return ({Promo:'badge-promo',Baru:'badge-baru',Unggulan:'badge-unggulan',Limited:'badge-limited'}[b]||'badge-default'); }
+function getCategories() { return ['Semua',...new Set(ads.map(a=>a.category).filter(Boolean))]; }
+function filtered()      { return activeFilter==='Semua' ? ads : ads.filter(a=>a.category===activeFilter); }
+
+/* ── Toast ── */
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+/* ── Filters ── */
+function renderFilters() {
+  const el=document.getElementById('iklanFilters');
+  el.innerHTML=getCategories().map(c=>`<button class="filter-chip${c===activeFilter?' active':''}" data-cat="${c}">${c}</button>`).join('');
+  el.querySelectorAll('.filter-chip').forEach(btn=>btn.addEventListener('click',()=>{activeFilter=btn.dataset.cat;renderFilters();renderGrid();}));
+}
+
+/* ── Grid ── */
+function renderGrid() {
+  const grid=document.getElementById('iklanGrid');
+  const countEl=document.getElementById('iklanCount');
+  const admin=isAdmin();
+  const list=filtered();
+  countEl.innerHTML=`Menampilkan <span>${list.length}</span> iklan`;
+
+  if(!list.length){
+    grid.innerHTML=`<div class="iklan-empty"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg><div class="iklan-empty-title">Belum ada iklan</div><div class="iklan-empty-sub">${admin?'Klik "Kelola Iklan" lalu tambah iklan baru.':'Belum ada iklan yang tersedia saat ini.'}</div></div>`;
+    return;
+  }
+
+  grid.innerHTML=list.map(ad=>`
+    <div class="ad-card" data-id="${ad.id}">
+      ${ad.imageUrl?`<img class="ad-image" src="${ad.imageUrl}" alt="${ad.title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:``}
+      <div class="ad-image-placeholder"${ad.imageUrl?' style="display:none"':''}>
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+      </div>
+      ${ad.badge?`<span class="ad-badge ${badgeClass(ad.badge)}">${ad.badge}</span>`:''}
+      ${admin?`<div class="ad-actions">
+        <button class="btn-card-action btn-edit" data-id="${ad.id}" title="Edit">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+        <button class="btn-card-action btn-delete" data-id="${ad.id}" title="Hapus">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"><polyline points="3,6 5,6 21,6"/><path d="M19,6l-1,14a2,2,0,0,1-2,2H8a2,2,0,0,1-2-2L5,6"/><path d="M10,11v6M14,11v6"/><path d="M9,6V4a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1v2"/></svg>
+        </button>
+      </div>`:''}
+      <div class="ad-body">
+        ${ad.category?`<div class="ad-category">${ad.category}</div>`:''}
+        <div class="ad-title">${ad.title}</div>
+        <div class="ad-desc">${ad.desc||''}</div>
+        <div class="ad-footer">
+          ${ad.price?`<div class="ad-price">${ad.price}</div>`:'<div></div>'}
+          ${ad.ctaLink?`<a class="ad-cta" href="${ad.ctaLink}" target="_blank" rel="noopener">${ad.ctaText||'Selengkapnya'}</a>`:''}
+        </div>
+      </div>
+    </div>`).join('');
+
+  grid.querySelectorAll('.btn-edit').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openEdit(b.dataset.id);}));
+  grid.querySelectorAll('.btn-delete').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openDeleteModal(b.dataset.id);}));
+}
+
+/* ── Form ── */
+function getForm(){return{title:f('fTitle'),category:f('fCategory'),desc:f('fDesc'),badge:f('fBadge'),price:f('fPrice'),ctaText:f('fCtaText'),ctaLink:f('fCtaLink'),imageUrl:f('fImageUrl')};}
+function f(id){const el=document.getElementById(id);return el?el.value.trim():'';}
+function fillForm(ad){['fTitle','fCategory','fDesc','fBadge','fPrice','fCtaText','fCtaLink','fImageUrl'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=ad[id.slice(1).toLowerCase()]||ad[{fTitle:'title',fCategory:'category',fDesc:'desc',fBadge:'badge',fPrice:'price',fCtaText:'ctaText',fCtaLink:'ctaLink',fImageUrl:'imageUrl'}[id]]||'';});}
+function clearForm(){document.querySelectorAll('#adminPanel .admin-input,#adminPanel .admin-textarea').forEach(el=>el.value='');document.getElementById('fBadge').value='';editId=null;document.getElementById('formTitle').textContent='+ Tambah Iklan Baru';document.getElementById('btnSave').textContent='Simpan Iklan';}
+
+function openEdit(id){
+  const ad=ads.find(a=>a.id===id); if(!ad)return;
+  editId=id;
+  document.getElementById('fTitle').value    = ad.title||'';
+  document.getElementById('fCategory').value = ad.category||'';
+  document.getElementById('fDesc').value     = ad.desc||'';
+  document.getElementById('fBadge').value    = ad.badge||'';
+  document.getElementById('fPrice').value    = ad.price||'';
+  document.getElementById('fCtaText').value  = ad.ctaText||'';
+  document.getElementById('fCtaLink').value  = ad.ctaLink||'';
+  document.getElementById('fImageUrl').value = ad.imageUrl||'';
+  document.getElementById('formTitle').textContent='✎ Edit Iklan';
+  document.getElementById('btnSave').textContent='Perbarui Iklan';
+  document.getElementById('adminPanel').classList.add('open');
+  document.getElementById('adminPanel').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function saveAd(){
+  const d=getForm(); if(!d.title){showToast('⚠ Judul iklan wajib diisi');return;}
+  if(editId){ const i=ads.findIndex(a=>a.id===editId); if(i!==-1)ads[i]={...ads[i],...d}; showToast('✓ Iklan berhasil diperbarui'); }
+  else { ads.unshift({id:uid(),...d,createdAt:Date.now()}); showToast('✓ Iklan baru ditambahkan'); }
+  saveAds(); clearForm(); renderFilters(); renderGrid();
+}
+
+/* ── Delete modal ── */
+function openDeleteModal(id){
+  deleteId=id; const ad=ads.find(a=>a.id===id);
+  document.getElementById('modalAdName').textContent=ad?.title||'iklan ini';
+  document.getElementById('deleteModal').classList.add('open');
+}
+function closeDeleteModal(){deleteId=null;document.getElementById('deleteModal').classList.remove('open');}
+function confirmDelete(){
+  if(!deleteId)return; ads=ads.filter(a=>a.id!==deleteId);
+  saveAds(); closeDeleteModal(); renderFilters(); renderGrid();
+  showToast('🗑 Iklan berhasil dihapus');
+}
+
+/* ── Admin bar ── */
+function renderAdminBar(){
+  const bar=document.getElementById('adminBar');
+  const panel=document.getElementById('adminPanel');
+  const pwPanel=document.getElementById('changePwPanel');
+
+  if(isAdmin()){
+    bar.innerHTML=`
+      <span class="admin-badge"><span class="admin-badge-dot"></span>Mode Admin</span>
+      <button class="btn-admin-toggle" id="btnToggle">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        <span id="lblToggle">Kelola Iklan</span>
+      </button>
+      <button class="btn-pw-link" id="btnTogglePw">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Ganti Password
+      </button>
+      <button class="btn-admin-logout" id="btnLogout">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Keluar
+      </button>`;
+
+    document.getElementById('btnToggle').addEventListener('click',()=>{
+      const open=panel.classList.toggle('open');
+      document.getElementById('lblToggle').textContent=open?'Sembunyikan':'Kelola Iklan';
+      if(!open)clearForm();
+      renderGrid();
+    });
+
+    document.getElementById('btnTogglePw').addEventListener('click',()=>{
+      const open=pwPanel.classList.toggle('open');
+      document.getElementById('btnTogglePw').textContent=open?'✕ Tutup':'🔑 Ganti Password';
+      if(!open){['pwCurrent','pwNew','pwConfirm'].forEach(id=>document.getElementById(id).value='');document.getElementById('pwFeedback').textContent='';}
+    });
+
+    document.getElementById('btnLogout').addEventListener('click',()=>{
+      doLogout(); panel.classList.remove('open'); pwPanel.classList.remove('open');
+      clearForm(); renderAdminBar(); renderGrid();
+      showToast('✓ Berhasil keluar dari mode admin');
+    });
+  } else {
+    bar.innerHTML=`
+      <button class="btn-admin-toggle" id="btnOpenLogin">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Kelola Iklan
+      </button>`;
+    document.getElementById('btnOpenLogin').addEventListener('click', openLoginModal);
+  }
+}
+
+/* ── Login modal ── */
+function openLoginModal(){
+  const m=document.getElementById('loginModal');
+  const inp=document.getElementById('adminPw');
+  m.classList.add('open'); inp.value='';
+  document.getElementById('loginErr').textContent='';
+  inp.classList.remove('shake');
+  setTimeout(()=>inp.focus(),200);
+}
+function closeLoginModal(){ document.getElementById('loginModal').classList.remove('open'); }
+
+/* ══════════════════════════════════════════
+   CURSOR
+══════════════════════════════════════════ */
+const cursor=document.getElementById('cursor'), ring=document.getElementById('cursorRing');
+const isTouch=window.matchMedia('(hover:none) and (pointer:coarse)').matches;
+if(isTouch){cursor.style.display='none';ring.style.display='none';}
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+(function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60),{passive:true});
+const ham=document.getElementById('navHamburger'),mob=document.getElementById('mobileMenu'),ov=document.getElementById('mobileOverlay');
+function toggleMenu(open){ham.classList.toggle('open',open);mob.classList.toggle('open',open);ov.classList.toggle('open',open);document.body.style.overflow=open?'hidden':'';}
+ham.addEventListener('click',()=>toggleMenu(!mob.classList.contains('open')));
+ov.addEventListener('click',()=>toggleMenu(false));
+mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+loadAds();
+renderAdminBar();
+renderFilters();
+renderGrid();
+
+/* ── Login form ── */
+document.getElementById('btnLoginClose').addEventListener('click', closeLoginModal);
+document.getElementById('loginModal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeLoginModal();});
+
+// Show/hide password
+const pwInp=document.getElementById('adminPw');
+document.getElementById('btnEye').addEventListener('click',()=>{
+  const show=pwInp.type==='password';
+  pwInp.type=show?'text':'password';
+  document.getElementById('eyeShow').style.display=show?'none':'';
+  document.getElementById('eyeHide').style.display=show?'':'none';
+});
+
+async function handleLogin(){
+  const pw=pwInp.value;
+  if(!pw){document.getElementById('loginErr').textContent='Password tidak boleh kosong.';return;}
+  const btn=document.getElementById('btnLogin');
+  btn.disabled=true; btn.textContent='Memeriksa...';
+  const ok=await tryLogin(pw);
+  btn.disabled=false; btn.textContent='Masuk sebagai Admin';
+  if(ok){
+    closeLoginModal(); renderAdminBar(); renderGrid();
+    showToast('✓ Login berhasil — selamat datang, Admin!');
+  } else {
+    pwInp.classList.remove('shake'); void pwInp.offsetWidth; pwInp.classList.add('shake');
+    document.getElementById('loginErr').textContent='Password salah. Coba lagi.';
+    pwInp.value=''; pwInp.focus();
+  }
+}
+document.getElementById('btnLogin').addEventListener('click', handleLogin);
+pwInp.addEventListener('keydown',e=>{if(e.key==='Enter')handleLogin();});
+pwInp.addEventListener('input',()=>{document.getElementById('loginErr').textContent='';pwInp.classList.remove('shake');});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLoginModal();});
+
+/* ── Ad form ── */
+document.getElementById('btnSave').addEventListener('click', saveAd);
+document.getElementById('btnCancelForm').addEventListener('click', clearForm);
+
+/* ── Change password ── */
+document.getElementById('btnSavePw').addEventListener('click', async()=>{
+  const cur=document.getElementById('pwCurrent').value;
+  const nw=document.getElementById('pwNew').value;
+  const conf=document.getElementById('pwConfirm').value;
+  const fb=document.getElementById('pwFeedback');
+  fb.className='pw-feedback'; fb.textContent='';
+  if(nw!==conf){fb.classList.add('error');fb.textContent='Password baru dan konfirmasi tidak cocok.';return;}
+  const btn=document.getElementById('btnSavePw');
+  btn.disabled=true; btn.textContent='Menyimpan...';
+  const res=await changePw(cur,nw);
+  btn.disabled=false; btn.textContent='Simpan Password';
+  if(res.ok){
+    fb.classList.add('success'); fb.textContent='✓ '+res.msg;
+    ['pwCurrent','pwNew','pwConfirm'].forEach(id=>document.getElementById(id).value='');
+    setTimeout(()=>{document.getElementById('changePwPanel').classList.remove('open');fb.textContent='';},2000);
+    showToast('✓ Password admin berhasil diubah');
+  } else {
+    fb.classList.add('error'); fb.textContent=res.msg;
+  }
+});
+document.getElementById('btnCancelPw').addEventListener('click',()=>{
+  document.getElementById('changePwPanel').classList.remove('open');
+  ['pwCurrent','pwNew','pwConfirm'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('pwFeedback').textContent='';
+});
+
+/* ── Delete modal ── */
+document.getElementById('btnModalCancel').addEventListener('click', closeDeleteModal);
+document.getElementById('btnModalDelete').addEventListener('click', confirmDelete);
+document.getElementById('deleteModal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeDeleteModal();});
+
+/* ── Smooth anchor ── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}}));
+</script>
+</body>
+</html>
