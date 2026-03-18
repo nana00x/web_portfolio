@@ -1,0 +1,68 @@
+/* ─────────────────────────────────────────
+   SERVICES / PORTFOLIO
+───────────────────────────────────────── */
+.services { background: rgba(10, 34, 24, 0.4); }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 60px;
+}
+
+.service-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(10, 34, 24, 0.6);
+  transition: border-color 0.3s, transform 0.3s var(--ease), box-shadow 0.3s;
+  cursor: none;
+}
+.service-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(34, 197, 94, 0.06), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.service-card:hover {
+  border-color: rgba(34, 197, 94, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+.service-card:hover::before { opacity: 1; }
+
+/* Featured card */
+.service-card.featured {
+  grid-row: span 2;
+  background: var(--grove);
+  border-color: rgba(34, 197, 94, 0.2);
+}
+.service-card.featured::before {
+  opacity: 1;
+  background: radial-gradient(circle at 70% 20%, rgba(34, 197, 94, 0.12), transparent 60%);
+}
+.service-card.featured .service-title { font-size: 26px; }
+.service-card.featured .service-body { font-size: 15px; }
+
+.service-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(74, 222, 128, 0.4);
+  margin-bottom: 24px;
+}
+.service-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: rgba(34, 197, 94, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border: 1px solid rgba(34, 197, 94, 0.15);
+}
+.service-title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px; }
+.service-body { font-size: 13.5px; color: rgba(255, 255, 255, 0.45); line-height: 1.7; margin-bottom: 24px; }
+.service-tags { display: flex; flex-wrap: wrap; gap: 6px; }

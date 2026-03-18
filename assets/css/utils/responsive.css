@@ -1,0 +1,105 @@
+/* ─────────────────────────────────────────
+   RESPONSIVE BREAKPOINTS
+───────────────────────────────────────── */
+
+/* ── Tablet  ≤ 900px ── */
+@media (max-width: 900px) {
+  #nav { padding: 16px 24px; }
+  #nav.scrolled { padding: 12px 24px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+
+  section { padding: 80px 24px; }
+
+  .stats { padding: 40px 24px; }
+  .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); padding: 20px; }
+  .stat-item:nth-child(3),
+  .stat-item:nth-child(4) { border-bottom: none; }
+
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .about-visual { max-width: 300px; margin: 0 auto; }
+
+  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .service-card.featured { grid-column: span 2; grid-row: span 1; }
+
+  .impact-inner { grid-template-columns: 1fr; gap: 48px; }
+  .impact-left { position: static; }
+  .impact-metrics { grid-template-columns: repeat(2, 1fr); }
+
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .partners { padding: 40px 24px; }
+  .partners-row { gap: 28px; }
+
+  .cta-section { padding: 80px 24px; }
+  .cta-actions { flex-wrap: wrap; }
+
+  .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+  .form-row { grid-template-columns: 1fr; }
+
+  footer { padding: 40px 24px; }
+  .footer-links { gap: 16px; }
+}
+
+/* ── Mobile  ≤ 640px ── */
+@media (max-width: 640px) {
+  #nav { padding: 14px 20px; }
+  #nav.scrolled { padding: 10px 20px; }
+
+  .hero { padding: 96px 20px 72px; }
+  .hero-mark svg { width: 88px; height: 88px; }
+  .hero-actions { flex-direction: column; align-items: center; gap: 12px; }
+  .btn-primary, .btn-ghost { width: 100%; max-width: 300px; text-align: center; }
+
+  section { padding: 60px 20px; }
+
+  .stats { padding: 28px 20px; }
+
+  .about-visual { max-width: 220px; }
+
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card.featured { grid-column: span 1; }
+  .service-card { padding: 28px 22px; }
+
+  .impact-metrics { grid-template-columns: 1fr 1fr; }
+  .metric-card { padding: 22px 18px; }
+  .metric-num { font-size: 34px; }
+
+  .team-grid { grid-template-columns: 1fr; max-width: 380px; margin-inline: auto; }
+
+  .testi-card { width: min(330px, calc(100vw - 48px)); }
+
+  .partners { padding: 28px 20px; }
+  .partners-row { gap: 16px; }
+  .partner-name { font-size: 13px; }
+
+  .cta-section { padding: 60px 20px; }
+  .cta-sub { font-size: 16px; }
+  .cta-actions { flex-direction: column; align-items: center; }
+  .btn-white, .cta-actions .btn-ghost { width: 100%; max-width: 300px; text-align: center; }
+
+  .form-submit { width: 100%; text-align: center; align-self: stretch; }
+
+  footer { padding: 32px 20px; }
+  .footer-links { gap: 12px; }
+  .footer-copy { font-size: 10px; }
+}
+
+/* ── Small Phone  ≤ 420px ── */
+@media (max-width: 420px) {
+  .hero-badge { font-size: 9px; letter-spacing: 0.08em; }
+  .hero-mark svg { width: 72px; height: 72px; }
+  .stat-num { font-size: 28px; }
+  .stat-label { font-size: 10px; }
+  .impact-metrics { grid-template-columns: 1fr; }
+  .testi-card { width: calc(100vw - 40px); padding: 24px 20px; }
+  .section-title { letter-spacing: -0.02em; }
+}
+
+/* ── Touch Devices — disable custom cursor ── */
+@media (hover: none) and (pointer: coarse) {
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none !important; }
+  .service-card, .team-card, .form-submit, select.form-input { cursor: pointer; }
+}

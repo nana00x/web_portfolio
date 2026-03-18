@@ -1,0 +1,30 @@
+/* ═══════════════════════════════════════════════════════════
+   AGRIVA INDONESIA — Main Stylesheet
+   Entry point. Imports all partials in dependency order.
+   ═══════════════════════════════════════════════════════════ */
+
+/* 1. Base */
+@import url('./base/variables.css');
+@import url('./base/reset.css');
+@import url('./base/animations.css');
+
+/* 2. Shared Components (buttons, tags, section headings, cursor) */
+@import url('./utils/components.css');
+
+/* 3. Layout */
+@import url('./layout/nav.css');
+@import url('./layout/footer.css');
+
+/* 4. Sections */
+@import url('./sections/hero.css');
+@import url('./sections/stats.css');
+@import url('./sections/about.css');
+@import url('./sections/services.css');
+@import url('./sections/impact.css');
+@import url('./sections/team.css');
+@import url('./sections/testimonials.css');
+@import url('./sections/partners.css');
+@import url('./sections/cta-contact.css');
+
+/* 5. Responsive (always last) */
+@import url('./utils/responsive.css');

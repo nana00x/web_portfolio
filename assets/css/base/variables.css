@@ -1,0 +1,46 @@
+/* ─────────────────────────────────────────
+   DESIGN TOKENS — CSS Custom Properties
+───────────────────────────────────────── */
+:root {
+  /* Color palette */
+  --deep:    #060F09;
+  --forest:  #0A2218;
+  --grove:   #14532D;
+  --mid:     #16A34A;
+  --leaf:    #22C55E;
+  --mist:    #4ADE80;
+  --frost:   #86EFAC;
+  --pale:    #F0FDF4;
+  --earth:   #78350F;
+  --soil:    #A16207;
+  --gold:    #D97706;
+  --ink:     #0F172A;
+  --slate:   #64748B;
+  --smoke:   #94A3B8;
+  --white:   #FFFFFF;
+
+  /* Typography */
+  --sans:    'Plus Jakarta Sans', sans-serif;
+  --serif:   'Lora', Georgia, serif;
+
+  /* Easing */
+  --ease:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease2:   cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Spacing scale */
+  --space-xs:   8px;
+  --space-sm:   16px;
+  --space-md:   24px;
+  --space-lg:   48px;
+  --space-xl:   80px;
+  --space-2xl:  120px;
+
+  /* Border radius */
+  --radius-sm:  10px;
+  --radius-md:  14px;
+  --radius-lg:  20px;
+  --radius-full: 9999px;
+
+  /* Max widths */
+  --max-width: 1200px;
+}
