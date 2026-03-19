@@ -28,3 +28,6 @@
 
 /* 5. Responsive (always last) */
 @import url('./utils/responsive.css');
+
+/* Iklan page */
+@import url('./sections/iklan.css');

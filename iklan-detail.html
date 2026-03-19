@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="Iklan produk pertanian terpilih — Agriva Indonesia"/>
-<title>Iklan Produk — Agriva Indonesia</title>
+<meta name="description" content="Detail iklan produk — Agriva Indonesia"/>
+<title>Detail Iklan — Agriva Indonesia</title>
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -60,46 +60,20 @@
 <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
 
 <!-- MAIN -->
-<main class="iklan-page">
+<main class="detail-page">
 
-  <header class="iklan-header">
-    <div class="iklan-header-left">
-      <div class="section-tag">Iklan Produk</div>
-      <h1 class="section-title">Produk <em>Unggulan</em><br/>untuk Petani</h1>
-    </div>
-    <button class="btn-refresh" id="btnRefresh" aria-label="Muat ulang data iklan">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
-        <polyline points="23 4 23 10 17 10"/>
-        <polyline points="1 20 1 14 7 14"/>
-        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-      </svg>
-      Refresh
-    </button>
-  </header>
+  <!-- Breadcrumb -->
+  <nav class="detail-breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Beranda</a>
+    <span class="detail-breadcrumb-sep">›</span>
+    <a href="iklan.html">Iklan Produk</a>
+    <span class="detail-breadcrumb-sep">›</span>
+    <span class="detail-breadcrumb-current" id="breadcrumbTitle">Detail</span>
+  </nav>
 
-  <div class="iklan-grid-wrapper">
-    <div class="iklan-meta">
-      <div class="iklan-count" id="iklanCount"></div>
-      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-        <div class="iklan-filters" id="iklanFilters" role="group" aria-label="Filter kategori"></div>
-        <div class="carousel-nav" id="carouselNav" style="display:none">
-          <button class="carousel-btn" id="btnPrev" aria-label="Sebelumnya" disabled>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-              <polyline points="15 18 9 12 15 6"/>
-            </svg>
-          </button>
-          <div class="carousel-dots" id="carouselDots"></div>
-          <button class="carousel-btn" id="btnNext" aria-label="Berikutnya">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-              <polyline points="9 18 15 12 9 6"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="carousel-track-wrap">
-      <div class="iklan-grid" id="iklanGrid" role="list" aria-label="Daftar iklan produk"></div>
-    </div>
+  <!-- Dynamic content -->
+  <div class="detail-wrap">
+    <div id="detailContent"></div>
   </div>
 
 </main>
@@ -129,21 +103,18 @@
   <div class="footer-copy">© 2025 <span>Agriva Indonesia</span>. Semua hak dilindungi.</div>
 </footer>
 
-<!-- TOAST -->
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
 <!-- Scripts (ES Modules) -->
 <script type="module">
-  import { initCursor }     from './assets/js/modules/cursor.js';
-  import { initNav }        from './assets/js/modules/nav.js';
-  import { initMobileMenu } from './assets/js/modules/mobileMenu.js';
-  import { initIklan }      from './assets/js/modules/iklan.js';
+  import { initCursor }        from './assets/js/modules/cursor.js';
+  import { initNav }           from './assets/js/modules/nav.js';
+  import { initMobileMenu }    from './assets/js/modules/mobileMenu.js';
+  import { initIklanDetail }   from './assets/js/modules/iklan-detail.js';
 
   document.addEventListener('DOMContentLoaded', () => {
     initCursor();
     initNav();
     initMobileMenu();
-    initIklan();
+    initIklanDetail();
   });
 </script>
 
