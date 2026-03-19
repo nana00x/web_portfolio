@@ -47,10 +47,16 @@
   #nav { padding: 14px 20px; }
   #nav.scrolled { padding: 10px 20px; }
 
-  .hero { padding: 96px 20px 72px; }
-  .hero-mark svg { width: 88px; height: 88px; }
-  .hero-actions { flex-direction: column; align-items: center; gap: 12px; }
-  .btn-primary, .btn-ghost { width: 100%; max-width: 300px; text-align: center; }
+  /* Hero */
+  .hero { padding: 80px 24px 64px; justify-content: center; }
+  .hero-badge { font-size: 10px; margin-bottom: 20px; padding: 5px 14px; }
+  .hero-mark { margin-bottom: 20px; }
+  .hero-mark svg { width: 80px; height: 80px; }
+  .hero-title { font-size: clamp(36px, 10vw, 52px); letter-spacing: -0.03em; }
+  .hero-sub { font-size: 14px; margin-top: 14px; max-width: 100%; }
+  .hero-actions { flex-direction: column; align-items: center; gap: 10px; margin-top: 28px; }
+  .btn-primary, .btn-ghost { width: 100%; max-width: 280px; text-align: center; padding: 14px 24px; }
+  .hero-scroll { bottom: 20px; }
 
   section { padding: 60px 20px; }
 
@@ -77,7 +83,7 @@
   .cta-section { padding: 60px 20px; }
   .cta-sub { font-size: 16px; }
   .cta-actions { flex-direction: column; align-items: center; }
-  .btn-white, .cta-actions .btn-ghost { width: 100%; max-width: 300px; text-align: center; }
+  .btn-white, .cta-actions .btn-ghost { width: 100%; max-width: 280px; text-align: center; }
 
   .form-submit { width: 100%; text-align: center; align-self: stretch; }
 
@@ -88,8 +94,17 @@
 
 /* ── Small Phone  ≤ 420px ── */
 @media (max-width: 420px) {
-  .hero-badge { font-size: 9px; letter-spacing: 0.08em; }
-  .hero-mark svg { width: 72px; height: 72px; }
+  /* Hero */
+  .hero { padding: 72px 20px 60px; }
+  .hero-badge { font-size: 9px; letter-spacing: 0.07em; padding: 5px 12px; margin-bottom: 16px; }
+  .hero-mark { margin-bottom: 16px; }
+  .hero-mark svg { width: 64px; height: 64px; }
+  .hero-title { font-size: clamp(32px, 9vw, 44px); }
+  .hero-sub { font-size: 13.5px; }
+  .hero-actions { margin-top: 24px; gap: 10px; }
+  .btn-primary, .btn-ghost { max-width: 260px; padding: 13px 20px; font-size: 13.5px; }
+  .hero-scroll { display: none; } /* hide scroll indicator on very small screens */
+
   .stat-num { font-size: 28px; }
   .stat-label { font-size: 10px; }
   .impact-metrics { grid-template-columns: 1fr; }
