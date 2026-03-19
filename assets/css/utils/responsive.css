@@ -2,12 +2,18 @@
    RESPONSIVE BREAKPOINTS
 ───────────────────────────────────────── */
 
-/* ── Tablet  ≤ 900px ── */
+/* ══ Tablet ≤ 1080px — hamburger earlier ══ */
+@media (max-width: 1080px) {
+  #nav { padding: 16px 32px; }
+  #nav.scrolled { padding: 12px 32px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+}
+
+/* ══ Tablet ≤ 900px ══ */
 @media (max-width: 900px) {
   #nav { padding: 16px 24px; }
   #nav.scrolled { padding: 12px 24px; }
-  .nav-links { display: none; }
-  .nav-hamburger { display: flex; }
 
   section { padding: 80px 24px; }
 
@@ -42,23 +48,51 @@
   .footer-links { gap: 16px; }
 }
 
-/* ── Mobile  ≤ 640px ── */
+/* ══ Mobile ≤ 640px ══ */
 @media (max-width: 640px) {
   #nav { padding: 14px 20px; }
   #nav.scrolled { padding: 10px 20px; }
 
-  /* Hero */
-  .hero { padding: 80px 24px 64px; justify-content: center; }
-  .hero-badge { font-size: 10px; margin-bottom: 20px; padding: 5px 14px; }
-  .hero-mark { margin-bottom: 20px; }
-  .hero-mark svg { width: 80px; height: 80px; }
-  .hero-title { font-size: clamp(36px, 10vw, 52px); letter-spacing: -0.03em; }
-  .hero-sub { font-size: 14px; margin-top: 14px; max-width: 100%; }
-  .hero-actions { flex-direction: column; align-items: center; gap: 10px; margin-top: 28px; }
-  .btn-primary, .btn-ghost { width: 100%; max-width: 280px; text-align: center; padding: 14px 24px; }
-  .hero-scroll { bottom: 20px; }
+  /* Hero — spacing dikurangi signifikan */
+  .hero {
+    padding: 76px 24px 56px;
+    min-height: 100dvh;
+    justify-content: center;
+  }
+  .hero-badge {
+    font-size: 10px;
+    padding: 5px 14px;
+    margin-bottom: 16px;
+  }
+  .hero-mark { margin-bottom: 16px; }
+  .hero-mark svg { width: 76px; height: 76px; }
+  .hero-title {
+    font-size: clamp(34px, 9.5vw, 50px);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+  .hero-sub {
+    font-size: 14px;
+    margin-top: 12px;
+    max-width: 100%;
+    line-height: 1.55;
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .btn-primary, .btn-ghost {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+    padding: 13px 24px;
+    font-size: 14px;
+  }
+  .hero-scroll { bottom: 16px; }
 
-  section { padding: 60px 20px; }
+  section { padding: 56px 20px; }
 
   .stats { padding: 28px 20px; }
 
@@ -80,10 +114,14 @@
   .partners-row { gap: 16px; }
   .partner-name { font-size: 13px; }
 
-  .cta-section { padding: 60px 20px; }
+  .cta-section { padding: 56px 20px; }
   .cta-sub { font-size: 16px; }
   .cta-actions { flex-direction: column; align-items: center; }
-  .btn-white, .cta-actions .btn-ghost { width: 100%; max-width: 280px; text-align: center; }
+  .btn-white, .cta-actions .btn-ghost {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
 
   .form-submit { width: 100%; text-align: center; align-self: stretch; }
 
@@ -92,18 +130,34 @@
   .footer-copy { font-size: 10px; }
 }
 
-/* ── Small Phone  ≤ 420px ── */
+/* ══ Small phone ≤ 420px ══ */
 @media (max-width: 420px) {
   /* Hero */
-  .hero { padding: 72px 20px 60px; }
-  .hero-badge { font-size: 9px; letter-spacing: 0.07em; padding: 5px 12px; margin-bottom: 16px; }
-  .hero-mark { margin-bottom: 16px; }
-  .hero-mark svg { width: 64px; height: 64px; }
-  .hero-title { font-size: clamp(32px, 9vw, 44px); }
-  .hero-sub { font-size: 13.5px; }
-  .hero-actions { margin-top: 24px; gap: 10px; }
-  .btn-primary, .btn-ghost { max-width: 260px; padding: 13px 20px; font-size: 13.5px; }
-  .hero-scroll { display: none; } /* hide scroll indicator on very small screens */
+  .hero { padding: 68px 20px 52px; }
+  .hero-badge {
+    font-size: 9px;
+    letter-spacing: 0.07em;
+    padding: 5px 12px;
+    margin-bottom: 12px;
+  }
+  .hero-mark { margin-bottom: 12px; }
+  .hero-mark svg { width: 60px; height: 60px; }
+  .hero-title {
+    font-size: clamp(30px, 8.5vw, 40px);
+    line-height: 1.05;
+  }
+  .hero-sub {
+    font-size: 13px;
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+  .hero-actions { margin-top: 20px; gap: 8px; }
+  .btn-primary, .btn-ghost {
+    max-width: 100%;
+    padding: 12px 20px;
+    font-size: 13.5px;
+  }
+  .hero-scroll { display: none; }
 
   .stat-num { font-size: 28px; }
   .stat-label { font-size: 10px; }
@@ -112,7 +166,39 @@
   .section-title { letter-spacing: -0.02em; }
 }
 
-/* ── Touch Devices — disable custom cursor ── */
+/* ══ Very small phone ≤ 360px ══ */
+@media (max-width: 360px) {
+  /* Hero — ultra compact */
+  .hero { padding: 64px 18px 48px; }
+  .hero-badge {
+    font-size: 8.5px;
+    padding: 4px 10px;
+    margin-bottom: 10px;
+    letter-spacing: 0.06em;
+  }
+  .hero-mark { margin-bottom: 10px; }
+  .hero-mark svg { width: 52px; height: 52px; }
+  .hero-title {
+    font-size: clamp(28px, 8vw, 36px);
+    line-height: 1.0;
+  }
+  .hero-sub {
+    font-size: 12.5px;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .hero-actions { margin-top: 18px; gap: 8px; }
+  .btn-primary, .btn-ghost { padding: 11px 18px; font-size: 13px; }
+
+  section { padding: 48px 18px; }
+  .stats { padding: 24px 18px; }
+  footer { padding: 28px 18px; }
+
+  .stat-num { font-size: 26px; }
+  .section-title { font-size: 26px; }
+}
+
+/* ══ Touch devices — disable custom cursor ══ */
 @media (hover: none) and (pointer: coarse) {
   body { cursor: auto; }
   .cursor, .cursor-ring { display: none !important; }

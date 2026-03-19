@@ -2,7 +2,7 @@
    HERO SECTION
 ───────────────────────────────────────── */
 .hero {
-  min-height: 100dvh; /* dvh = memperhitungkan address bar mobile */
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,7 +47,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--mist);
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   animation: fadeUp 0.8s var(--ease) 0.2s both;
   position: relative; z-index: 1;
 }
@@ -59,14 +59,14 @@
 }
 
 .hero-mark {
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   animation: fadeUp 0.9s var(--ease) 0.35s both;
   position: relative; z-index: 1;
 }
 .hero-mark svg { filter: drop-shadow(0 0 40px rgba(34, 197, 94, 0.3)); }
 
 .hero-title {
-  font-size: clamp(40px, 7vw, 96px);
+  font-size: clamp(36px, 7vw, 96px);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1.0;
@@ -78,11 +78,11 @@
 .hero-sub {
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(15px, 2vw, 22px);
+  font-size: clamp(14px, 2vw, 22px);
   color: rgba(255, 255, 255, 0.45);
   margin-top: 16px;
   max-width: 540px;
-  line-height: 1.65;
+  line-height: 1.6;
   animation: fadeUp 0.9s var(--ease) 0.65s both;
   position: relative; z-index: 1;
 }
@@ -91,7 +91,7 @@
   display: flex;
   gap: 12px;
   justify-content: center;
-  margin-top: 36px;
+  margin-top: 32px;
   animation: fadeUp 0.9s var(--ease) 0.8s both;
   position: relative; z-index: 1;
 }
